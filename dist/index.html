@@ -1,0 +1,166 @@
+<?php
+require_once "/etc/apache2/Developer/Sisobrand/wxjssdk/jssdk.php";
+$jssdk = new JSSDK("wxb66fe8e6ed2e6e02", "c6702f33202d0b98badf453a5f7a7bfa");
+$signPackage = $jssdk->GetSignPackage();
+?>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-touch-fullscreen" content="no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <title>只要坚持，梦想总是可以实现的</title>
+
+    <!-- config -->
+    <script>
+        var environment = {
+            version: 'reporter'
+        };
+    </script>
+    <!-- end config -->
+
+    <script>
+        var check = {
+            browser: {
+                versions: function(){
+                    var u = navigator.userAgent, app = navigator.appVersion;
+                    return {
+                        webKit: u.indexOf('AppleWebKit') > -1,
+                        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                        weixin: u.indexOf('MicroMessenger') > -1,
+                        txnews: u.indexOf('qqnews') > -1,
+                        sinawb: u.indexOf('weibo') > -1,
+                        mqq   : u.indexOf('QQ') > -1
+                    };
+                }(),
+                language:(navigator.browserLanguage || navigator.language).toLowerCase()
+            }
+        };
+
+        if (!check.browser.versions.ios) {
+            location = 'http://h5.stardo.com.cn/kaiyi201606/';
+        }
+    </script>
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="assets/stylesheets/app.min.css">
+    <!-- endinject -->
+
+    <!-- weixin share thumb -->
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+        <img src='http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-share-icon.jpg' />
+    </div>
+    <!-- end weixin share thumb -->
+</head>
+<body>
+<!-- the class "content" is used for flexible plugin -->
+<div class="content">
+    <div class="pa loading">
+        <div class="pa loading-plain"></div>
+        <div class="pa loading-text"><span class="loading-counter"></span><br/><span class="status">Loading...</span></div>
+    </div>
+
+    <div class="pa poster"></div>
+    <div class="pa bg"></div>
+
+    <div class="pa videobox videobox01">
+        <video class="video01" data-index="1" x-webkit-airplay="true" webkit-playsinline="true" src="http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-new03-part01.mp4" poster="http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-bg-paper.jpg"></video>
+    </div>
+
+    <div class="pa videobox videobox02">
+        <video class="video02" data-index="2" x-webkit-airplay="true" webkit-playsinline="true" src="http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-new03-part02.mp4" poster="http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-new03-video02-poster.jpg"></video>
+    </div>
+
+    <div class="pa videobox videobox03">
+        <video class="video03" data-index="3" x-webkit-airplay="true" webkit-playsinline="true" src="http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-new-part03.mp4" poster="http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-video03-poster.jpg"></video>
+    </div>
+
+    <!-- scene01 -->
+    <section class="pa scene scene01">
+        <div class="throw-plain">
+            <img class="pa plain" />
+
+            <div class="pa tips">
+                <img alt=""/>
+            </div>
+            <img class="pa arrow"/>
+        </div>
+    </section>
+    <!-- end scene01 -->
+
+    <!-- scene03 -->
+    <section class="pa scene scene03">
+        <textarea class="message" placeholder="输入文字"></textarea>
+        <input class="name" type="text"/>
+        <input class="phone" type="number"/>
+        <span class="pa submit" tabindex="4"></span>
+    </section>
+    <!-- end scene03 -->
+
+    <!-- counter -->
+    <div class="pa counter">
+        <span class="pa day"></span>
+        <span class="pa hours"></span>
+        <span class="pa minus"></span>
+        <span class="pa seconds"></span>
+    </div>
+</div>
+
+<div class="page-arrow"></div>
+<div class="page-arrow page-arrow-below"></div>
+
+<audio class="audio01" src="http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-new03-audio01.mp3" loop></audio>
+<audio class="audio02" src="http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-new03-audio02.mp3" loop></audio>
+<audio class="audio03" src="http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-new03-audio03.mp3" loop></audio>
+
+<!-- inject:js -->
+<script src="assets/scripts/app.min.js"></script>
+<!-- endinject -->
+
+<!-- wechat share-->
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '<?php echo $signPackage["appId"];?>',
+        timestamp: '<?php echo $signPackage["timestamp"];?>',
+        nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+        signature: '<?php echo $signPackage["signature"];?>',
+        jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline']
+    });
+
+    wx.ready(function () {
+        /** initia wechat config as default */
+            // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+            // 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareTimeline({
+            title: '只要坚持，梦想总是可以实现的', // 分享标题
+            link: 'http://www.sisobrand.com/h5/kaiyi-reporter/dist', // 分享链接
+            imgUrl: 'http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-share-icon.jpg', // 分享图标
+            success: function () {
+            },
+            cancel: function () {
+            }
+        });
+
+        // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareAppMessage({
+            title: '只要坚持，梦想总是可以实现的', // 分享标题
+            desc: '当更多人的梦想朝一个方向飞驰, 奇迹就发生了', // 分享描述
+            link: 'http://www.sisobrand.com/h5/kaiyi-reporter/dist', // 分享链接
+            imgUrl: 'http://7xp6iq.com1.z0.glb.clouddn.com/kaiyi-share-icon.jpg', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+            },
+            cancel: function () {
+            }
+        });
+    });
+</script>
+</body>
+</html>
